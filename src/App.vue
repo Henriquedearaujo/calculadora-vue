@@ -1,47 +1,61 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div id="app">
+    <h1>Calculadora Aritmética</h1>
+    <div>
+      <input v-model.number="num1" type="number" placeholder="Número 1" />
+      <select v-model="operation">
+        <option value="add">+</option>
+        <option value="subtract">-</option>
+        <option value="multiply">*</option>
+        <option value="divide">/</option>
+      </select>
+      <input v-model.number="num2" type="number" placeholder="Número 2" />
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div>
+      <h2>Resultado: {{ result }}</h2>
+    </div>
+  </div>
 </template>
 
+<script>
+export default {
+  data() {
+    return {
+      num1: 0,
+      num2: 0,
+      operation: 'add',
+    };
+  },
+  computed: {
+    result() {
+      switch (this.operation) {
+        case 'add':
+          return this.num1 + this.num2;
+        case 'subtract':
+          return this.num1 - this.num2;
+        case 'multiply':
+          return this.num1 * this.num2;
+        case 'divide':
+          return this.num2 !== 0 ? this.num1 / this.num2 : 'Erro: Divisão por zero';
+        default:
+          return 0;
+      }
+    },
+  },
+};
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
+#app {
+  text-align: center;
+  margin-top: 250px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+input {
+  margin: 0 10px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+select {
+  margin: 0 10px;
 }
 </style>
